@@ -1,0 +1,26 @@
+{
+    "requests_credentials": {
+        "type": "noul",
+        "instructions": "Does `message.body` ask the recipient to provide a password or other login credential?"
+    },
+    "offers_unexpected_reward": {
+        "type": "noul",
+        "instructions": "Does `message.body` claim the recipient received an unexpected prize, payment, or reward?"
+    },
+    "creates_time_pressure": {
+        "type": "noul",
+        "instructions": "Does `message.subject` or `message.body` pressure the recipient to act quickly?"
+    },
+    "sender_identity_mismatch": {
+        "type": "noul",
+        "instructions": "Does the organization named in `message.sender.display_name` conflict with the domain in `message.sender.email`?"
+    },
+    "link_domain_mismatch": {
+        "type": "noul",
+        "instructions": "Does the domain in `message.links[0].url` conflict with the organization named in `message.sender.display_name`?"
+    },
+    "disguises_link_destination": {
+        "type": "noul",
+        "instructions": "Does `message.links[0].text` conceal or misrepresent the destination in `message.links[0].url`?"
+    }
+}

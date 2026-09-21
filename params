@@ -1,0 +1,6 @@
+message.body
+message.subject
+message.sender.display_name
+message.sender.email
+message.links[i].url
+message.links[i].text

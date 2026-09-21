@@ -1,0 +1,36 @@
+{
+  "message": {
+    "subject": "AI Design School: 40% OFF, 5 days left 🚀",
+    "sender": {
+      "display_name": "Felix from ADPList",
+      "email": "events@mail.adplist.org"
+    },
+    "body": "The least popular decision I made this launch — and everything you get anyway.\n\nHi Sofiene,\n\n \n\nThe most common question since Monday: wait, no refunds?\n\n \n\nCorrect. It's the part of this offer I've thought about hardest.\n\n \n\nA guarantee sounds generous. For a course, it mostly does one thing → it lets\nyou buy without deciding. You tell yourself you'll try it. Seven days pass. The\nonly thing you actually did was give yourself an exit.\n\n \n\nSo I did the opposite. I cut the price by nearly half and asked for one thing\nback: that you mean it.\n\n \n\nHere's what you're committing to:\n\n \n\nThe full 7-step course, three bonus courses, the Builder Pass and lifetime\ncommunity → $6,490 value, yours for $129 until Aug 31.\n\n \n\nIf you need a safety net to start, this isn't your moment, and I'd rather you\nkept the $129. If you're ready, it's all in there.\n\nApply to join - $129 ➔ [https://adplist.org/vibe-code-designers]\n\nFelix from ADPList",
+    "links": [
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/html/ecefd129-13ab-5f65-9e75-69cc871d3b78/9bcbe26b-5083-5559-b57c-50976bb18f02/05cb3e6f-4dfe-5ac8-9356-6363186604b0?urlChildId=ccb32016-700d-59eb-ad42-5d132dfb2026&templateId=a954a342-f603-485e-a25a-245e7f55561b",
+        "text": "Apply to join - $129 ➔"
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/honey-link/html/ecefd129-13ab-5f65-9e75-69cc871d3b78/9bcbe26b-5083-5559-b57c-50976bb18f02",
+        "text": "Click here"
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/unsubscribes/html/ecefd129-13ab-5f65-9e75-69cc871d3b78/9bcbe26b-5083-5559-b57c-50976bb18f02",
+        "text": "Unsubscribe"
+      }
+    ]
+  },
+  "classification": {
+    "verdict": "spam",
+    "spam_signals_fired": 2,
+    "signals": {
+      "requests_credentials": 0.01,
+      "offers_unexpected_reward": 0.02,
+      "creates_time_pressure": 0.95,
+      "sender_identity_mismatch": 0.1,
+      "link_domain_mismatch": 0.57,
+      "disguises_link_destination": 0.26
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "message": {
+    "date": "Thu, 16 Jul 2026 08:17:06 +0000",
+    "subject": "reminder: share a free pass, get Claude Pro",
+    "sender": {
+      "display_name": "ADPList",
+      "email": "events@mail.adplist.org"
+    },
+    "body": "A reminder to the last week. Free mentorship, for life, for anyone you invite.\nAnd get Claude Pro when 10 friends join.\n\n-\n[https://img.mmdocdn.com/mailmodo/image/upload/ar_122:31,c_crop/v1730807558/editor/p/ee04e184-c8ca-43e2-b3d0-02540dfb0927/c77676d5faa9d00daa6805bdd25d2c3e_yhm5r3.png]https://adplist.org\n\n\nGIVE YOUR FRIENDS THE GIFT OF OPPORTUNITY, GET CLAUDE PRO\n\nSofiene,\n\n \n\nLast week, 6,800+ people joined ADPList because a friend invited them. Their\nfirst mentor sessions are already booked. Your invites are still sitting unused.\n\n \n\nYou're at 2 of 10 toward your free month of Claude Pro.\n[https://app.adplist.org/invite] Think of the last person who asked you for\ncareer advice, and send them your link. It takes 10 seconds.\n\n \n\nPeople rarely ask for help twice.\n\nInvite friends [https://app.adplist.org/invite]\n\nAlternate image text\n[https://img.mmdocdn.com/mailmodo/image/upload/ar_1413:713,c_crop/v1781176968/editor/p/ee04e184-c8ca-43e2-b3d0-02540dfb0927/abb6abf0ba6f727f50eb65a545f14c4e_scjkrx.png]https://app.adplist.org/invite\n\nWith love,\n\nTeam ADPList",
+    "links": [
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/html/fc01657f-2f31-5900-9a8c-9f9b055d48c3/4426589d-fb55-5324-9483-85ede7bf7362/62e92e33-fba7-5b58-bb9a-6217c86770ff?urlChildId=4cfd10d9-721b-5a5d-a602-f89b799f86d6&templateId=93e6b701-6bda-4d77-a6fa-4915c18096e7",
+        "text": ""
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/html/fc01657f-2f31-5900-9a8c-9f9b055d48c3/4426589d-fb55-5324-9483-85ede7bf7362/beaf81e5-bbad-55c9-8b68-79957233e5a5?urlChildId=548bfccf-026e-5da8-b2f5-8e9a79e4f57a&templateId=93e6b701-6bda-4d77-a6fa-4915c18096e7",
+        "text": "You're at 2 of 10 toward your free month of Claude Pro."
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/html/fc01657f-2f31-5900-9a8c-9f9b055d48c3/4426589d-fb55-5324-9483-85ede7bf7362/beaf81e5-bbad-55c9-8b68-79957233e5a5?urlChildId=116c0191-29d5-5235-8031-b6f5d77438a4&templateId=93e6b701-6bda-4d77-a6fa-4915c18096e7",
+        "text": "Invite friends"
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/html/fc01657f-2f31-5900-9a8c-9f9b055d48c3/4426589d-fb55-5324-9483-85ede7bf7362/beaf81e5-bbad-55c9-8b68-79957233e5a5?urlChildId=5b9ffc43-fce4-50cf-9c98-99052a2c65db&templateId=93e6b701-6bda-4d77-a6fa-4915c18096e7",
+        "text": ""
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/honey-link/html/fc01657f-2f31-5900-9a8c-9f9b055d48c3/4426589d-fb55-5324-9483-85ede7bf7362",
+        "text": "Click here"
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/unsubscribes/html/fc01657f-2f31-5900-9a8c-9f9b055d48c3/4426589d-fb55-5324-9483-85ede7bf7362",
+        "text": "Unsubscribe"
+      }
+    ]
+  },
+  "classification": {
+    "verdict": "spam",
+    "spam_signals_fired": 3,
+    "signals": {
+      "requests_credentials": 0.01,
+      "offers_unexpected_reward": 0.07,
+      "creates_time_pressure": 0.91,
+      "sender_identity_mismatch": 0.1,
+      "link_domain_mismatch": 0.67,
+      "disguises_link_destination": 0.54
+    }
+  }
+}

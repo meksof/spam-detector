@@ -1,0 +1,44 @@
+{
+  "message": {
+    "subject": "Good experience, weak signal",
+    "sender": {
+      "display_name": "Stefan from TailoredCV.ai",
+      "email": "stefan@re.tailoredcv.ai"
+    },
+    "body": "Hi there,\r\n\r\nThere is a frustrating moment many job seekers know too well. You find a job that looks like a strong match. You read the description and think: “I can do this.”\r\nYou have the skills.\r\nYou have the experience.\r\nYou understand the role.\r\nBut then you look at your CV and wonder: “Does this actually show that?”\r\nThat is where many strong candidates lose visibility. Not because they are not qualified.\r\nBut because their CV does not make the connection clear enough.\r\n\r\n\r\nMake my CV more relevant https://tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=body_cta\r\n\r\n\r\n\r\n\r\n----------------------------------------\r\n\r\nRecruiters are not looking for your full life story.\r\nThey are looking for relevance.\r\nThey want to quickly understand why your background fits this specific role.\r\nTailoredCV.ai https://tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=body_link helps you connect your real experience to the job description, so your CV speaks more clearly to the role you want.\r\nNo overclaiming.\r\nNo fake experience.\r\nNo unnecessary rewriting from zero.\r\nJust a better version of your CV for the job you are applying for.\r\n\r\nTailor my CV https://app.tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=footer_cta\r\n\r\n— https://tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=body_signatureTailoredCV.ai https://tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=body_signature\r\n\r\n----------------------------------------\r\n\r\nThis email was sent by TailoredCV.ai, a service of Outboard Support Hub LLC.\r\n\r\n© Outboard Support Hub LLC. All rights reserved.\r\n\r\nWant to change how you receive these emails?\r\nYou can unsubscribe from this list https://unsubscribe.resend.com/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250YWN0SWQiOiI3Zjk1OGM3OC0yNWRkLTQ1NmMtYWZiMy0zNzEwYjM2NjEzMGIiLCJicm9hZGNhc3RJZCI6IjEzYTM4ODI3LTBlMmYtNDk0MC05MDRhLWUxMWFjOGU3MmIwMCIsInRlYW1JZCI6IjNmNDBhNTc4LTU1NDMtNGQ5ZS05M2M5LTlhNmIyNjNlNWI5YiIsImV4cCI6MTgxOTE5ODg4N30.e916XQiUdSeYf6NzRTwhuQxQQ6ILgeD_n9Piof069p4.",
+    "links": [
+      {
+        "url": "https://tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=body_cta",
+        "text": "Make my CV more relevant"
+      },
+      {
+        "url": "https://tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=body_link",
+        "text": "TailoredCV.ai"
+      },
+      {
+        "url": "https://app.tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=footer_cta",
+        "text": "Tailor my CV"
+      },
+      {
+        "url": "https://tailoredcv.ai/?utm_source=newsletter&utm_medium=email&utm_campaign=tcv_nl_26_08_25_good_experience_weak_signal&utm_content=body_signature",
+        "text": "—"
+      },
+      {
+        "url": "https://unsubscribe.resend.com/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250YWN0SWQiOiI3Zjk1OGM3OC0yNWRkLTQ1NmMtYWZiMy0zNzEwYjM2NjEzMGIiLCJicm9hZGNhc3RJZCI6IjEzYTM4ODI3LTBlMmYtNDk0MC05MDRhLWUxMWFjOGU3MmIwMCIsInRlYW1JZCI6IjNmNDBhNTc4LTU1NDMtNGQ5ZS05M2M5LTlhNmIyNjNlNWI5YiIsImV4cCI6MTgxOTE5ODg4N30.e916XQiUdSeYf6NzRTwhuQxQQ6ILgeD_n9Piof069p4",
+        "text": "unsubscribe from this list"
+      }
+    ]
+  },
+  "classification": {
+    "verdict": "ham",
+    "spam_signals_fired": 0,
+    "signals": {
+      "requests_credentials": 0.01,
+      "offers_unexpected_reward": 0.01,
+      "creates_time_pressure": 0.12,
+      "sender_identity_mismatch": 0.16,
+      "link_domain_mismatch": 0.06,
+      "disguises_link_destination": 0.08
+    }
+  }
+}

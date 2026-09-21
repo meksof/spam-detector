@@ -1,0 +1,28 @@
+{
+  "message": {
+    "subject": "Re: Alignerr engineering opportunities",
+    "sender": {
+      "display_name": "Michael Wilson",
+      "email": "michael.wilson@coachbyalignerr.com"
+    },
+    "body": "Hi John Doe,\r\n\r\nJust following up to see if you had any questions about Alignerr or the project-based software engineering work we discussed. \r\n\r\nIf you're still interested in exploring flexible opportunities to evaluate and improve coding AI systems, you can complete your profile and initial assessments whenever you're ready: https://app.alignerr.com/signup\r\n\r\nLet me know if anything comes to mind!\r\n\r\nBest regards,\r\n\r\nMary Harris",
+    "links": [
+      {
+        "url": "https://app.alignerr.com/signup",
+        "text": "https://app.alignerr.com/signup"
+      }
+    ]
+  },
+  "classification": {
+    "verdict": "ham",
+    "spam_signals_fired": 0,
+    "signals": {
+      "requests_credentials": 0.02,
+      "offers_unexpected_reward": 0.01,
+      "creates_time_pressure": 0.13,
+      "sender_identity_mismatch": 0.35,
+      "link_domain_mismatch": 0.13,
+      "disguises_link_destination": 0.03
+    }
+  }
+}

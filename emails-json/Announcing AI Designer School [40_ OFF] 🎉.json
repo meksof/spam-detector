@@ -1,0 +1,40 @@
+{
+  "message": {
+    "subject": "Announcing AI Designer School [40% OFF] 🎉",
+    "sender": {
+      "display_name": "Felix from ADPList",
+      "email": "events@mail.adplist.org"
+    },
+    "body": "Here's everything you're getting, and exactly when it ends.\n\nHi Sofiene,\n\n \n\nI rebuilt AI First Designer School and relaunched it at $129. It was $249.\n\n \n\nThe page has been quietly live for a couple of weeks — this is the first time\nI'm telling this list. It comes down on 31 August at 11:59pm PT, and the price\ngoes back to $249.\n\n \n\nHere's exactly what you're getting:\n\n \n\nTHE COURSE STACK\n✅ Full 7-Step Vibe Coding Course — Figma file to deployed app\n✅ Sub-Agents: Build Your AI Agent Team — $297 value\n✅ Vibe Coding an iOS App Course — $899 value\n\n✅ Figma x Claude Code — $599 value\n\n \n\nTHE BONUSES\n🎫 Builder Pass — 100+ tool deals and credits — $5,000+ value\n🔖 \"Design by Intelligence\" ebook — $97 value\n💎 Lifetime private community access — $197 value\n📈 All future course updates — priceless\n------------------------------------------------------------\n\nTotal value: $6,490+\nWas: $249\nYour price until Aug 31: $129\n\nSee what's inside - $129 ➔ [https://adplist.org/vibe-code-designers]\n\nFor this window, it also carries the launch bonuses: the iOS and Figma MCP\ncourses, the Sub-Agents course, the Design by Intelligence ebook, and the\nBuilder Pass. Those come off on the 31st along with the price.\n\n \n\nOne thing to know before you click: there are no refunds at $129. That's\ndeliberate. I'll explain it properly on Wednesday.\n\nApply to join today [https://adplist.org/vibe-code-designers]\n\nSee you inside,\n\nFelix from ADPList",
+    "links": [
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/html/486f75ab-1698-5af6-9581-4611b1e20be6/21285556-ac9b-53d8-8a27-31345d1b072d/05cb3e6f-4dfe-5ac8-9356-6363186604b0?urlChildId=13e0a7bc-3189-5bdd-b93c-f38426b9f52b&templateId=0922635e-d97b-479f-acf9-cae94e793a5e",
+        "text": "See what's inside - $129 ➔"
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/html/486f75ab-1698-5af6-9581-4611b1e20be6/21285556-ac9b-53d8-8a27-31345d1b072d/05cb3e6f-4dfe-5ac8-9356-6363186604b0?urlChildId=b81948ce-697e-5e63-893c-1928b52ae267&templateId=0922635e-d97b-479f-acf9-cae94e793a5e",
+        "text": "Apply to join today"
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/clicks/honey-link/html/486f75ab-1698-5af6-9581-4611b1e20be6/21285556-ac9b-53d8-8a27-31345d1b072d",
+        "text": "Click here"
+      },
+      {
+        "url": "https://mgbmcpldzx.c.mmtrkr.com/unsubscribes/html/486f75ab-1698-5af6-9581-4611b1e20be6/21285556-ac9b-53d8-8a27-31345d1b072d",
+        "text": "Unsubscribe"
+      }
+    ]
+  },
+  "classification": {
+    "verdict": "spam",
+    "spam_signals_fired": 2,
+    "signals": {
+      "requests_credentials": 0.01,
+      "offers_unexpected_reward": 0.02,
+      "creates_time_pressure": 0.97,
+      "sender_identity_mismatch": 0.09,
+      "link_domain_mismatch": 0.75,
+      "disguises_link_destination": 0.25
+    }
+  }
+}
