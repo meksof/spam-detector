@@ -63,7 +63,7 @@ The result is written back into the same JSON file under a `"classification"` ke
 }
 ```
 
-On a **borderline case** — where `spam_signals_fired` equals `SPAM_SIGNAL_THRESHOLD` exactly — the local GGUF model is also consulted via Ollama. Its verdict and explanation are printed to stdout and appended to `metrics.csv`. The local model never modifies the JSON output.
+On a **borderline case** — where `spam_signals_fired` equals `SPAM_SIGNAL_THRESHOLD` exactly — a fine-tuned ONNX encoder is also consulted. Its verdict and confidence score are printed to stdout and appended to `metrics.csv`. The encoder never modifies the JSON output.
 
 ---
 
@@ -73,14 +73,21 @@ On a **borderline case** — where `spam_signals_fired` equals `SPAM_SIGNAL_THRE
 spam-detector/
 ├── emails-eml/                  # Input: raw .eml files
 ├── emails-json/                 # Output: parsed + classified JSON files
-├── model/
-│   ├── Modelfile                # Ollama model registration
-│   └── safe-space-spam-detector.Q2_K.gguf  # Local GGUF model
+├── spam-classifier/             # Fine-tuning workspace (encoder training)
+│   ├── data/                    # train.csv + eval.csv (generated)
+│   ├── model/              # Fine-tuned PyTorch checkpoint (generated)
+│   ├── model-onnx/         # Quantized ONNX model + tokenizer (generated)
+│   ├── prepare_data.py          # Download + preprocess training data
+│   ├── train_spam_classifier.py # Fine-tune MiniLM/DistilBERT
+│   ├── export_and_quantize.py   # Export to ONNX INT8
+│   ├── requirements.txt         # Fine-tuning dependencies
+│   └── README.md
 ├── params                       # Field spec used for EML parsing
 ├── questions.json               # TypeSafe Noul questions for classification
 ├── parse_emails.py              # Step 1: EML → JSON
 ├── classify_emails.py           # Step 2: JSON → classification via TypeSafe
-├── local_classifier.py          # Local Ollama classifier (borderline cases)
+├── encoder_classifier.py        # ONNX encoder classifier (borderline cases)
+├── local_classifier.py          # Ollama classifier (legacy, kept for rollback)
 ├── metrics.py                   # CSV logger for borderline case metrics
 ├── metrics.csv                  # Appended at runtime (git-ignored)
 ├── .env                         # API key (git-ignored)
@@ -102,7 +109,7 @@ source .venv/bin/activate
 ### 2. Install dependencies
 
 ```bash
-pip install typesafe-sdk python-dotenv ollama
+pip install typesafe-sdk python-dotenv "optimum[onnxruntime]>=1.20.0" "onnxruntime>=1.18.0" "transformers>=4.44.0"
 ```
 
 ### 3. Configure your API key
@@ -115,24 +122,14 @@ TYPESAFE_API_KEY=your_api_key_here
 
 Get your key at [console.typesafe.ai](https://console.typesafe.ai/).
 
-### 4. Set up the local model (one-time)
+### 4. Set up the encoder (one-time)
 
-Make sure [Ollama](https://ollama.com) is installed and the server is running:
+The encoder is a fine-tuned MiniLM model exported to ONNX INT8. It lives in `spam-classifier/model-onnx/` and is built by the fine-tuning pipeline in `spam-classifier/`. See `spam-classifier/README.md` for the full training steps.
 
-```bash
-ollama serve
-```
-
-Then register the local GGUF model from the `model/` directory:
+Once trained and exported, the encoder is loaded automatically from `./spam-classifier/model-onnx/` at runtime. To use a different path:
 
 ```bash
-ollama create safe-space-spam-detector -f model/Modelfile
-```
-
-You only need to do this once. Verify it works with:
-
-```bash
-ollama run safe-space-spam-detector "Is this spam?"
+export ENCODER_MODEL_DIR=/path/to/model-onnx
 ```
 
 ---
@@ -175,7 +172,7 @@ In `classify_emails.py`, adjust how many signals must fire for an email to be co
 SPAM_SIGNAL_THRESHOLD = 2   # default: spam if ≥ 2 signals fire
 ```
 
-A **borderline case** is any email where `spam_signals_fired` equals `SPAM_SIGNAL_THRESHOLD` exactly — right on the decision boundary. For these emails, the local model is automatically consulted and its second opinion is printed to stdout and logged to `metrics.csv`.
+A **borderline case** is any email where `spam_signals_fired` equals `SPAM_SIGNAL_THRESHOLD` exactly — right on the decision boundary. For these emails, the encoder is automatically consulted and its second opinion is printed to stdout and logged to `metrics.csv`.
 
 ### Add or modify questions
 
@@ -200,7 +197,9 @@ No code changes needed — the classifier loads questions dynamically from the f
 |---|---|
 | [`typesafe-sdk`](https://pypi.org/project/typesafe-sdk/) | TypeSafe System One API client |
 | [`python-dotenv`](https://pypi.org/project/python-dotenv/) | Load `TYPESAFE_API_KEY` from `.env` |
-| [`ollama`](https://pypi.org/project/ollama/) | Python client for the local Ollama server |
+| [`optimum[onnxruntime]`](https://pypi.org/project/optimum/) | Load and run the ONNX encoder model |
+| [`onnxruntime`](https://pypi.org/project/onnxruntime/) | ONNX runtime for CPU inference |
+| [`transformers`](https://pypi.org/project/transformers/) | Tokenizer and pipeline for the encoder |
 
 The standard library covers everything else (`email`, `html.parser`, `json`, `re`, `csv`).
 
@@ -208,13 +207,15 @@ The standard library covers everything else (`email`, `html.parser`, `json`, `re
 
 ## Metrics
 
-Borderline cases are logged to `metrics.csv` at the project root (git-ignored). Each row captures the local model's second opinion for a case where TypeSafe fired exactly `SPAM_SIGNAL_THRESHOLD` signals.
+Borderline cases are logged to `metrics.csv` at the project root (git-ignored). Each row captures the encoder's second opinion for a case where TypeSafe fired exactly `SPAM_SIGNAL_THRESHOLD` signals.
 
 | Column | Description |
 |---|---|
 | `timestamp` | ISO 8601 UTC time of classification |
 | `filename` | JSON filename of the email |
-| `verdict` | Local model verdict: `spam` or `ham` |
-| `explanation` | Full free-text reasoning from the local model |
+| `typesafe_signals_fired` | Number of TypeSafe signals that fired (always == `SPAM_SIGNAL_THRESHOLD`) |
+| `encoder_verdict` | Encoder verdict: `spam` or `ham` |
+| `encoder_confidence` | Spam probability from the encoder: float 0.0–1.0 |
+| `encoder_explanation` | Short summary (e.g. `MiniLM ONNX INT8, confidence=0.87`) |
 
-This data can be used to evaluate and improve the local GGUF model over time.
+This data can be used to evaluate and improve the encoder over time.

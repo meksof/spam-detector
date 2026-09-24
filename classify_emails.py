@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Spam classifier powered by TypeSafe (Jev) with local model support.
+Spam classifier powered by TypeSafe (Jev) with encoder second-opinion support.
 
 Reads every JSON file from emails-json/, sends the email state to the
 TypeSafe System One API using the questions defined in questions.json,
@@ -9,10 +9,10 @@ and writes a "classification" key back into each JSON file.
 All questions run in a single parallel request per email.
 The spam verdict is derived from the combination of Noul answers.
 
-On a borderline case (spam_signals_fired == SPAM_SIGNAL_THRESHOLD), the
-local GGUF model is also invoked via Ollama. Its verdict and explanation
-are printed to stdout and appended to metrics.csv for future training.
-The local model never modifies the JSON classification block.
+On a borderline case (spam_signals_fired == SPAM_SIGNAL_THRESHOLD), a
+fine-tuned ONNX encoder is also invoked. Its verdict and confidence are
+printed to stdout and appended to metrics.csv for future training.
+The encoder never modifies the JSON classification block.
 """
 
 import json
@@ -22,7 +22,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from typesafe_sdk import Noul, TypeSafeClient
 
-from local_classifier import classify_local
+from encoder_classifier import classify_encoder
 from metrics import log_metric
 
 load_dotenv(Path(__file__).parent / ".env")
@@ -105,12 +105,12 @@ def main():
                     print(f"       {marker} {sig}: {prob:.2f}")
                 print()
 
-                # Borderline case: fire local model for a second opinion + log metrics
+                # Borderline case: fire encoder for a second opinion + log metrics
                 if fired == SPAM_SIGNAL_THRESHOLD:
-                    print(f"       ⚠️  Borderline case ({fired}/{total} signals) — consulting local model...")
-                    local_result = classify_local(email)
+                    print(f"       ⚠️  Borderline case ({fired}/{total} signals) — consulting encoder...")
+                    local_result = classify_encoder(email)
                     if local_result:
-                        log_metric(path.name, local_result)
+                        log_metric(path.name, fired, local_result)
 
             except Exception as exc:
                 print(f"✗  {path.name}: {exc}\n")

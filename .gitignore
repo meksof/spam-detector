@@ -3,3 +3,7 @@
 __pycache__/
 *.pyc
 metrics.csv
+
+# data files
+emails-eml/*
+emails-json/*

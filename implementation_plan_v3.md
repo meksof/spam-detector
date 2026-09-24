@@ -115,7 +115,7 @@ python train_spam_classifier.py \
     --train_csv data/train.csv \
     --eval_csv data/eval.csv \
     --model_name microsoft/MiniLM-L12-H384-uncased \
-    --output_dir ./spam-model \
+    --output_dir ./model \
     --epochs 3 \
     --batch_size 16 \
     --lr 2e-5
@@ -130,7 +130,7 @@ python train_spam_classifier.py \
 - If the dataset is imbalanced (spam < 30%), add class weighting via a custom `Trainer` subclass that overrides `compute_loss` to apply `torch.nn.CrossEntropyLoss(weight=...)`.
 - `train_spam_classifier.py` already exists and is ready to use without modification.
 
-**Output:** `spam-classifier/spam-model/` (PyTorch checkpoint + tokenizer)
+**Output:** `spam-classifier/model/` (PyTorch checkpoint + tokenizer)
 
 **Acceptance:** Final eval metrics printed; F1 ≥ 0.95.
 
@@ -143,11 +143,11 @@ python train_spam_classifier.py \
 **Command:**
 ```bash
 python export_and_quantize.py \
-    --model_dir ./spam-model \
-    --output_dir ./spam-model-onnx
+    --model_dir ./model \
+    --output_dir ./model-onnx
 ```
 
-**Output:** `spam-classifier/spam-model-onnx/model_quantized.onnx` + tokenizer files.
+**Output:** `spam-classifier/model-onnx/model_quantized.onnx` + tokenizer files.
 
 **Expected:**
 - Model file size ≤ 40MB (MiniLM-L12 INT8)
@@ -155,7 +155,7 @@ python export_and_quantize.py \
 
 **Notes:** `export_and_quantize.py` already exists and is ready to use without modification.
 
-**Acceptance:** `inference.py --model_dir ./spam-model-onnx --text "test"` runs and returns a result within 5ms.
+**Acceptance:** `inference.py --model_dir ./model-onnx --text "test"` runs and returns a result within 5ms.
 
 ---
 
@@ -184,7 +184,7 @@ def classify_encoder(email: dict) -> dict | None:
 
 **Implementation details:**
 - Load the model once at module import time (singleton pattern) to avoid reload overhead on repeated calls.
-- Model path: configurable via `ENCODER_MODEL_DIR` environment variable; default: `../fine-tuning/spam-classifier/spam-model-onnx` (relative to `spam-detector/`).
+- Model path: configurable via `ENCODER_MODEL_DIR` environment variable; default: `../fine-tuning/spam-classifier/model-onnx` (relative to `spam-detector/`).
 - Build the input text as `subject + " " + body` (same as training preprocessing).
 - Run inference with `ORTModelForSequenceClassification` + `AutoTokenizer` + HuggingFace `pipeline`.
 - Return `verdict = "spam"` if `confidence > 0.5`, else `"ham"`.
@@ -274,8 +274,8 @@ No other changes to the classification logic or the TypeSafe path.
 | `prepare_data.py` | `spam-classifier` | Create | Download + preprocess public spam dataset into train/eval CSVs |
 | `data/train.csv` | `spam-classifier` | Create | Training data (≥5000 rows) |
 | `data/eval.csv` | `spam-classifier` | Create | Evaluation data (≥1000 rows) |
-| `spam-model/` | `spam-classifier` | Create | Fine-tuned PyTorch checkpoint |
-| `spam-model-onnx/` | `spam-classifier` | Create | Quantized ONNX model + tokenizer |
+| `model/` | `spam-classifier` | Create | Fine-tuned PyTorch checkpoint |
+| `model-onnx/` | `spam-classifier` | Create | Quantized ONNX model + tokenizer |
 | `encoder_classifier.py` | `spam-detector` | Create | Drop-in replacement for `local_classifier.py` using ONNX encoder |
 | `classify_emails.py` | `spam-detector` | Modify | Swap `classify_local` import for `classify_encoder` (2-line change) |
 | `metrics.py` | `spam-detector` | Modify | Add `typesafe_signals_fired` and `encoder_confidence` columns |
