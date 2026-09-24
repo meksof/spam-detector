@@ -1,5 +1,6 @@
 {
   "message": {
+    "date": "Wed, 29 Jul 2026 07:52:19 +0000",
     "subject": "last call: give a friend a month of Claude Pro 🚀",
     "sender": {
       "display_name": "ADPList",
@@ -44,8 +45,8 @@
       "requests_credentials": 0.01,
       "offers_unexpected_reward": 0.13,
       "creates_time_pressure": 0.99,
-      "sender_identity_mismatch": 0.08,
-      "link_domain_mismatch": 0.72,
+      "sender_identity_mismatch": 0.09,
+      "link_domain_mismatch": 0.66,
       "disguises_link_destination": 0.56
     }
   }
