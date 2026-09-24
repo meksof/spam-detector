@@ -15,7 +15,7 @@ from typing import Optional
 
 import ollama
 
-MODEL_NAME = "safe-space-spam-detector"
+MODEL_NAME = "tinyllama:latest"
 
 
 def _build_prompt(email: dict) -> str:
@@ -35,6 +35,9 @@ def _build_prompt(email: dict) -> str:
         links_text = "\nLinks:\n" + "\n".join(link_lines)
 
     return (
+        f"Classify the following email as spam or ham.\n"
+        f"Start your response with exactly 'Verdict: spam' or 'Verdict: ham', "
+        f"then explain your reasoning.\n\n"
         f"Subject: {subject}\n"
         f"From: {sender_name} <{sender_email}>\n"
         f"\n{body}"

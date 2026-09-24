@@ -12,11 +12,11 @@
     "verdict": "spam",
     "spam_signals_fired": 2,
     "signals": {
-      "requests_credentials": 0.13,
-      "offers_unexpected_reward": 0.27,
-      "creates_time_pressure": 0.68,
-      "sender_identity_mismatch": 0.67,
-      "link_domain_mismatch": 0.09,
+      "requests_credentials": 0.14,
+      "offers_unexpected_reward": 0.21,
+      "creates_time_pressure": 0.64,
+      "sender_identity_mismatch": 0.73,
+      "link_domain_mismatch": 0.08,
       "disguises_link_destination": 0.05
     }
   }
