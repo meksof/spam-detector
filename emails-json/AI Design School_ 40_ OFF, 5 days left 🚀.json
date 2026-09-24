@@ -26,11 +26,11 @@
     "spam_signals_fired": 2,
     "signals": {
       "requests_credentials": 0.01,
-      "offers_unexpected_reward": 0.02,
-      "creates_time_pressure": 0.95,
-      "sender_identity_mismatch": 0.1,
-      "link_domain_mismatch": 0.57,
-      "disguises_link_destination": 0.26
+      "offers_unexpected_reward": 0.01,
+      "creates_time_pressure": 0.94,
+      "sender_identity_mismatch": 0.11,
+      "link_domain_mismatch": 0.59,
+      "disguises_link_destination": 0.25
     }
   }
 }

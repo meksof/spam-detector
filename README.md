@@ -63,6 +63,8 @@ The result is written back into the same JSON file under a `"classification"` ke
 }
 ```
 
+On a **borderline case** — where `spam_signals_fired` equals `SPAM_SIGNAL_THRESHOLD` exactly — the local GGUF model is also consulted via Ollama. Its verdict and explanation are printed to stdout and appended to `metrics.csv`. The local model never modifies the JSON output.
+
 ---
 
 ## Project structure
@@ -70,12 +72,18 @@ The result is written back into the same JSON file under a `"classification"` ke
 ```
 spam-detector/
 ├── emails-eml/                  # Input: raw .eml files
-├── emails-json/             # Output: parsed + classified JSON files
-├── params                   # Field spec used for EML parsing
-├── questions.json           # TypeSafe Noul questions for classification
-├── parse_emails.py          # Step 1: EML → JSON
-├── classify_emails.py       # Step 2: JSON → classification via TypeSafe
-├── .env                     # API key (git-ignored)
+├── emails-json/                 # Output: parsed + classified JSON files
+├── model/
+│   ├── Modelfile                # Ollama model registration
+│   └── safe-space-spam-detector.Q2_K.gguf  # Local GGUF model
+├── params                       # Field spec used for EML parsing
+├── questions.json               # TypeSafe Noul questions for classification
+├── parse_emails.py              # Step 1: EML → JSON
+├── classify_emails.py           # Step 2: JSON → classification via TypeSafe
+├── local_classifier.py          # Local Ollama classifier (borderline cases)
+├── metrics.py                   # CSV logger for borderline case metrics
+├── metrics.csv                  # Appended at runtime (git-ignored)
+├── .env                         # API key (git-ignored)
 ├── .gitignore
 └── README.md
 ```
@@ -94,7 +102,7 @@ source .venv/bin/activate
 ### 2. Install dependencies
 
 ```bash
-pip install typesafe-sdk python-dotenv
+pip install typesafe-sdk python-dotenv ollama
 ```
 
 ### 3. Configure your API key
@@ -106,6 +114,26 @@ TYPESAFE_API_KEY=your_api_key_here
 ```
 
 Get your key at [console.typesafe.ai](https://console.typesafe.ai/).
+
+### 4. Set up the local model (one-time)
+
+Make sure [Ollama](https://ollama.com) is installed and the server is running:
+
+```bash
+ollama serve
+```
+
+Then register the local GGUF model from the `model/` directory:
+
+```bash
+ollama create safe-space-spam-detector -f model/Modelfile
+```
+
+You only need to do this once. Verify it works with:
+
+```bash
+ollama run safe-space-spam-detector "Is this spam?"
+```
 
 ---
 
@@ -147,6 +175,8 @@ In `classify_emails.py`, adjust how many signals must fire for an email to be co
 SPAM_SIGNAL_THRESHOLD = 2   # default: spam if ≥ 2 signals fire
 ```
 
+A **borderline case** is any email where `spam_signals_fired` equals `SPAM_SIGNAL_THRESHOLD` exactly — right on the decision boundary. For these emails, the local model is automatically consulted and its second opinion is printed to stdout and logged to `metrics.csv`.
+
 ### Add or modify questions
 
 Edit `questions.json`. Each entry must have a `type` (`"noul"`) and `instructions`. Reference email fields using backtick paths that match the JSON structure (`message.body`, `message.sender.email`, etc.):
@@ -170,5 +200,21 @@ No code changes needed — the classifier loads questions dynamically from the f
 |---|---|
 | [`typesafe-sdk`](https://pypi.org/project/typesafe-sdk/) | TypeSafe System One API client |
 | [`python-dotenv`](https://pypi.org/project/python-dotenv/) | Load `TYPESAFE_API_KEY` from `.env` |
+| [`ollama`](https://pypi.org/project/ollama/) | Python client for the local Ollama server |
 
-Both are standard library-free additions; everything else (`email`, `html.parser`, `json`, `re`) is built into Python 3.
+The standard library covers everything else (`email`, `html.parser`, `json`, `re`, `csv`).
+
+---
+
+## Metrics
+
+Borderline cases are logged to `metrics.csv` at the project root (git-ignored). Each row captures the local model's second opinion for a case where TypeSafe fired exactly `SPAM_SIGNAL_THRESHOLD` signals.
+
+| Column | Description |
+|---|---|
+| `timestamp` | ISO 8601 UTC time of classification |
+| `filename` | JSON filename of the email |
+| `verdict` | Local model verdict: `spam` or `ham` |
+| `explanation` | Full free-text reasoning from the local model |
+
+This data can be used to evaluate and improve the local GGUF model over time.
