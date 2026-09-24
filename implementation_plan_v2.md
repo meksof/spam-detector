@@ -1,4 +1,4 @@
-# Implementation Plan — Local Model Pipeline + Metrics Logging
+# Implementation Plan V2 — Local Model Pipeline + Metrics Logging
 
 ## Problem Statement
 
