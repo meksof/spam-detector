@@ -10,7 +10,7 @@ classify_encoder() reuse the same pipeline with no reload overhead.
 
 Model path resolution (in order of priority):
   1. ENCODER_MODEL_DIR environment variable
-  2. Default: ./spam-classifier/model-onnx/ (relative to this file)
+  2. Default: ../spam-encoder/model-onnx/ (relative to this file)
 """
 
 import os
@@ -37,12 +37,12 @@ def _get_pipeline():
     if env_path:
         _model_dir = Path(env_path)
     else:
-        _model_dir = Path(__file__).parent / "spam-classifier" / "model-onnx"
+        _model_dir = Path(__file__).parent.parent / "spam-encoder" / "model-onnx"
 
     if not _model_dir.exists():
         warnings.warn(
             f"[ENCODER] Model directory not found: {_model_dir}\n"
-            "Run spam-classifier/train_spam_classifier.py then export_and_quantize.py first,\n"
+            "Run spam-encoder/train_spam_encoder.py then export_and_quantize.py first,\n"
             "or set ENCODER_MODEL_DIR to the correct path."
         )
         return None
@@ -84,7 +84,7 @@ def classify_encoder(email: dict) -> Optional[dict]:
     Classify a borderline email using the fine-tuned ONNX encoder.
 
     Prints the verdict and confidence to stdout.
-    Returns {"verdict": str, "confidence": float, "explanation": str},
+    Returns {"verdict": str, "confidence": float, "used_model": str},
     or None if the model is unavailable.
     """
     pipe = _get_pipeline()
@@ -109,12 +109,12 @@ def classify_encoder(email: dict) -> Optional[dict]:
     spam_score = scores.get("LABEL_1", scores.get("spam", 0.0))
     verdict = "spam" if spam_score > 0.5 else "ham"
     confidence = round(spam_score, 4)
-    explanation = f"MiniLM ONNX INT8, confidence={confidence:.4f}"
+    used_model = f"MiniLM ONNX INT8"
 
     print(f"       [ENCODER] Verdict: {verdict.upper()}  (confidence: {confidence:.2f})")
 
     return {
         "verdict": verdict,
         "confidence": confidence,
-        "explanation": explanation,
+        "used_model": used_model,
     }

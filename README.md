@@ -73,21 +73,11 @@ On a **borderline case** — where `spam_signals_fired` equals `SPAM_SIGNAL_THRE
 spam-detector/
 ├── emails-eml/                  # Input: raw .eml files
 ├── emails-json/                 # Output: parsed + classified JSON files
-├── spam-classifier/             # Fine-tuning workspace (encoder training)
-│   ├── data/                    # train.csv + eval.csv (generated)
-│   ├── spam-model/              # Fine-tuned PyTorch checkpoint (generated)
-│   ├── spam-model-onnx/         # Quantized ONNX model + tokenizer (generated)
-│   ├── prepare_data.py          # Download + preprocess training data
-│   ├── train_spam_classifier.py # Fine-tune MiniLM/DistilBERT
-│   ├── export_and_quantize.py   # Export to ONNX INT8
-│   ├── requirements.txt         # Fine-tuning dependencies
-│   └── README.md
 ├── params                       # Field spec used for EML parsing
 ├── questions.json               # TypeSafe Noul questions for classification
 ├── parse_emails.py              # Step 1: EML → JSON
 ├── classify_emails.py           # Step 2: JSON → classification via TypeSafe
 ├── encoder_classifier.py        # ONNX encoder classifier (borderline cases)
-├── local_classifier.py          # Ollama classifier (legacy, kept for rollback)
 ├── metrics.py                   # CSV logger for borderline case metrics
 ├── metrics.csv                  # Appended at runtime (git-ignored)
 ├── requirements.txt             # Runtime dependencies
@@ -95,6 +85,8 @@ spam-detector/
 ├── .gitignore
 └── README.md
 ```
+
+The encoder fine-tuning workspace is a **separate project**: `spam-encoder/` (historically named `spam-classifier`), located in a sibling directory next to this one.
 
 ---
 
@@ -125,12 +117,12 @@ Get your key at [console.typesafe.ai](https://console.typesafe.ai/).
 
 ### 4. Set up the encoder (one-time)
 
-The encoder is a fine-tuned MiniLM model exported to ONNX INT8. It lives in `spam-classifier/spam-model-onnx/` and is built by the fine-tuning pipeline in `spam-classifier/`. See `spam-classifier/README.md` for the full training steps.
+The encoder is a fine-tuned MiniLM model exported to ONNX INT8 that provides a second opinion on borderline cases. It is trained and exported by the **`spam-encoder`** project (historically named `spam-classifier`), which lives in a sibling directory. See `spam-encoder/README.md` for the full training steps.
 
-Once trained and exported, the encoder is loaded automatically from `./spam-classifier/spam-model-onnx/` at runtime. To use a different path:
+Once the encoder is trained and exported, point this project to its model directory:
 
 ```bash
-export ENCODER_MODEL_DIR=/path/to/spam-model-onnx
+export ENCODER_MODEL_DIR=/path/to/spam-encoder/model-onnx
 ```
 
 ---
@@ -206,9 +198,9 @@ Runtime dependencies for this project are declared in `requirements.txt`:
 
 The standard library covers everything else (`email`, `html.parser`, `json`, `re`, `csv`).
 
-### Fine-tuning workspace (`spam-classifier/`)
+### Encoder fine-tuning (`spam-encoder/`)
 
-The encoder training, evaluation, and ONNX export dependencies are declared separately in `spam-classifier/requirements.txt` (`datasets`, `torch`, `scikit-learn`, `accelerate`, plus the `optimum[onnxruntime]`, `onnxruntime`, and `transformers` trio). See `spam-classifier/README.md` for the setup.
+The encoder training, evaluation, and ONNX export dependencies are declared separately in the sibling `spam-encoder/` project — in `spam-encoder/requirements.txt` (`datasets`, `torch`, `scikit-learn`, `accelerate`, plus the `optimum[onnxruntime]`, `onnxruntime`, and `transformers` trio). See `spam-encoder/README.md` for the setup.
 
 ---
 
@@ -223,6 +215,6 @@ Borderline cases are logged to `metrics.csv` at the project root (git-ignored). 
 | `typesafe_signals_fired` | Number of TypeSafe signals that fired (always == `SPAM_SIGNAL_THRESHOLD`) |
 | `encoder_verdict` | Encoder verdict: `spam` or `ham` |
 | `encoder_confidence` | Spam probability from the encoder: float 0.0–1.0 |
-| `encoder_explanation` | Short summary (e.g. `MiniLM ONNX INT8, confidence=0.87`) |
+| `encoder_used_model` | Short summary of the encoder model (e.g. `MiniLM ONNX INT8, confidence=0.87`) |
 
 This data can be used to evaluate and improve the encoder over time.

@@ -13,10 +13,10 @@ CSV schema (V3):
     typesafe_signals_fired  int — TypeSafe signal count that triggered borderline path
     encoder_verdict         spam or ham
     encoder_confidence      float 0.0–1.0 — spam probability from the encoder
-    encoder_explanation     short string (e.g. "MiniLM ONNX INT8, confidence=0.87")
+    encoder_used_model      short string (e.g. "MiniLM ONNX INT8")
 
-Schema change from V2: 'verdict' and 'explanation' columns have been renamed
-to 'encoder_verdict' and 'encoder_explanation', and 'typesafe_signals_fired'
+Schema change from V2: 'verdict' and 'used_model' columns have been renamed
+to 'encoder_verdict' and 'encoder_used_model', and 'typesafe_signals_fired'
 and 'encoder_confidence' have been added.
 """
 
@@ -31,7 +31,7 @@ CSV_COLUMNS = [
     "typesafe_signals_fired",
     "encoder_verdict",
     "encoder_confidence",
-    "encoder_explanation",
+    "encoder_used_model",
 ]
 
 
@@ -42,7 +42,7 @@ def log_metric(filename: str, signals_fired: int, classification: dict) -> None:
     Args:
         filename:        The JSON filename of the email (e.g. "welcome.json").
         signals_fired:   The TypeSafe spam_signals_fired count (== SPAM_SIGNAL_THRESHOLD).
-        classification:  Dict with "verdict", "confidence", and "explanation" keys,
+        classification:  Dict with "verdict", "confidence", and "used_model" keys,
                          as returned by classify_encoder().
     """
     row = {
@@ -51,7 +51,7 @@ def log_metric(filename: str, signals_fired: int, classification: dict) -> None:
         "typesafe_signals_fired": signals_fired,
         "encoder_verdict": classification.get("verdict", "unknown"),
         "encoder_confidence": classification.get("confidence", ""),
-        "encoder_explanation": classification.get("explanation", ""),
+        "encoder_used_model": classification.get("used_model", ""),
     }
 
     file_exists = METRICS_PATH.exists()
