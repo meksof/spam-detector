@@ -75,8 +75,8 @@ spam-detector/
 ├── emails-json/                 # Output: parsed + classified JSON files
 ├── spam-classifier/             # Fine-tuning workspace (encoder training)
 │   ├── data/                    # train.csv + eval.csv (generated)
-│   ├── model/              # Fine-tuned PyTorch checkpoint (generated)
-│   ├── model-onnx/         # Quantized ONNX model + tokenizer (generated)
+│   ├── spam-model/              # Fine-tuned PyTorch checkpoint (generated)
+│   ├── spam-model-onnx/         # Quantized ONNX model + tokenizer (generated)
 │   ├── prepare_data.py          # Download + preprocess training data
 │   ├── train_spam_classifier.py # Fine-tune MiniLM/DistilBERT
 │   ├── export_and_quantize.py   # Export to ONNX INT8
@@ -90,6 +90,7 @@ spam-detector/
 ├── local_classifier.py          # Ollama classifier (legacy, kept for rollback)
 ├── metrics.py                   # CSV logger for borderline case metrics
 ├── metrics.csv                  # Appended at runtime (git-ignored)
+├── requirements.txt             # Runtime dependencies
 ├── .env                         # API key (git-ignored)
 ├── .gitignore
 └── README.md
@@ -109,7 +110,7 @@ source .venv/bin/activate
 ### 2. Install dependencies
 
 ```bash
-pip install typesafe-sdk python-dotenv "optimum[onnxruntime]>=1.20.0" "onnxruntime>=1.18.0" "transformers>=4.44.0"
+pip install -r requirements.txt
 ```
 
 ### 3. Configure your API key
@@ -124,12 +125,12 @@ Get your key at [console.typesafe.ai](https://console.typesafe.ai/).
 
 ### 4. Set up the encoder (one-time)
 
-The encoder is a fine-tuned MiniLM model exported to ONNX INT8. It lives in `spam-classifier/model-onnx/` and is built by the fine-tuning pipeline in `spam-classifier/`. See `spam-classifier/README.md` for the full training steps.
+The encoder is a fine-tuned MiniLM model exported to ONNX INT8. It lives in `spam-classifier/spam-model-onnx/` and is built by the fine-tuning pipeline in `spam-classifier/`. See `spam-classifier/README.md` for the full training steps.
 
-Once trained and exported, the encoder is loaded automatically from `./spam-classifier/model-onnx/` at runtime. To use a different path:
+Once trained and exported, the encoder is loaded automatically from `./spam-classifier/spam-model-onnx/` at runtime. To use a different path:
 
 ```bash
-export ENCODER_MODEL_DIR=/path/to/model-onnx
+export ENCODER_MODEL_DIR=/path/to/spam-model-onnx
 ```
 
 ---
@@ -193,6 +194,8 @@ No code changes needed — the classifier loads questions dynamically from the f
 
 ## Dependencies
 
+Runtime dependencies for this project are declared in `requirements.txt`:
+
 | Package | Purpose |
 |---|---|
 | [`typesafe-sdk`](https://pypi.org/project/typesafe-sdk/) | TypeSafe System One API client |
@@ -202,6 +205,10 @@ No code changes needed — the classifier loads questions dynamically from the f
 | [`transformers`](https://pypi.org/project/transformers/) | Tokenizer and pipeline for the encoder |
 
 The standard library covers everything else (`email`, `html.parser`, `json`, `re`, `csv`).
+
+### Fine-tuning workspace (`spam-classifier/`)
+
+The encoder training, evaluation, and ONNX export dependencies are declared separately in `spam-classifier/requirements.txt` (`datasets`, `torch`, `scikit-learn`, `accelerate`, plus the `optimum[onnxruntime]`, `onnxruntime`, and `transformers` trio). See `spam-classifier/README.md` for the setup.
 
 ---
 
