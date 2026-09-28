@@ -106,7 +106,7 @@ def main():
                 print()
 
                 # Borderline case: fire encoder for a second opinion + log metrics
-                if fired == SPAM_SIGNAL_THRESHOLD:
+                if fired <= SPAM_SIGNAL_THRESHOLD:
                     print(f"       ⚠️  Borderline case ({fired}/{total} signals) — consulting encoder...")
                     local_result = classify_encoder(email)
                     if local_result:
