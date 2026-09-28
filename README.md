@@ -86,7 +86,7 @@ spam-detector/
 └── README.md
 ```
 
-The encoder fine-tuning workspace is a **separate project**: `spam-encoder/` (historically named `spam-classifier`), located in a sibling directory next to this one.
+The encoder fine-tuning workspace is a **separate project**: [spam-encoder](https://github.com/meksof/spam-encoder) (historically named `spam-classifier`).
 
 ---
 
@@ -117,7 +117,7 @@ Get your key at [console.typesafe.ai](https://console.typesafe.ai/).
 
 ### 4. Set up the encoder (one-time)
 
-The encoder is a fine-tuned MiniLM model exported to ONNX INT8 that provides a second opinion on borderline cases. It is trained and exported by the **`spam-encoder`** project (historically named `spam-classifier`), which lives in a sibling directory. See `spam-encoder/README.md` for the full training steps.
+The encoder is a fine-tuned MiniLM model exported to ONNX INT8 that provides a second opinion on borderline cases. It is trained and exported by the [spam-encoder](https://github.com/meksof/spam-encoder) project (historically named `spam-classifier`). See the repository README for the full training steps.
 
 Once the encoder is trained and exported, point this project to its model directory:
 
