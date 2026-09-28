@@ -74,6 +74,9 @@ def main():
 
     questions = load_questions(questions_path)
     json_files = sorted(emails_json_dir.glob("*.json"))
+    len_spam = 0
+    len_ham = 0
+    classified = 0
 
     if not json_files:
         print("No JSON files found in emails-json/")
@@ -90,13 +93,18 @@ def main():
                     print(f"✓ {path.name}: Already classified")
                     continue
 
+                classified += 1
                 result = classify(client, questions, email)
                 email["classification"] = result
                 path.write_text(
                     json.dumps(email, ensure_ascii=False, indent=2), encoding="utf-8"
                 )
-
-                icon = "🚨" if result["verdict"] == "spam" else "✅"
+                if result["verdict"] == "spam":
+                    len_spam += 1
+                    icon = "🚨"
+                else:
+                    len_ham += 1
+                    icon = "✅"
                 fired = result["spam_signals_fired"]
                 total = len(questions)
                 print(f"{icon} [{result['verdict'].upper():4s}]  {fired}/{total} signals  {path.name}")
@@ -115,7 +123,10 @@ def main():
             except Exception as exc:
                 print(f"✗  {path.name}: {exc}\n")
 
-    print(f"Done — results written to {emails_json_dir}/")
+    print("\n--------------------------------")
+    print(f"Total classified: {classified} email(s)")
+    print(f"Spam: {len_spam}")
+    print(f"Ham: {len_ham}")
 
 
 if __name__ == "__main__":
