@@ -215,6 +215,7 @@ Borderline cases are logged to `metrics.csv` at the project root (git-ignored). 
 | `typesafe_signals_fired` | Number of TypeSafe signals that fired (always == `SPAM_SIGNAL_THRESHOLD`) |
 | `encoder_verdict` | Encoder verdict: `spam` or `ham` |
 | `encoder_confidence` | Spam probability from the encoder: float 0.0–1.0 |
+| `encoder_latency_ms` | Encoder inference time in milliseconds |
 | `encoder_used_model` | Short summary of the encoder model (e.g. `MiniLM ONNX INT8, confidence=0.87`) |
 
 This data can be used to evaluate and improve the encoder over time.

@@ -7,3 +7,6 @@ metrics.csv
 # data files
 emails-eml/*
 emails-json/*
+
+# agents
+.kiro

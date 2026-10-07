@@ -14,6 +14,7 @@ Model path resolution (in order of priority):
 """
 
 import os
+import time
 import warnings
 from pathlib import Path
 from typing import Optional
@@ -97,7 +98,9 @@ def classify_encoder(email: dict) -> Optional[dict]:
     text = (subject + " " + body).strip()[:512]
 
     try:
+        t0 = time.perf_counter()
         results = pipe(text, truncation=True, max_length=256)
+        latency_ms = round((time.perf_counter() - t0) * 1000, 2)
     except Exception as exc:
         warnings.warn(f"[ENCODER] Inference error: {exc}")
         return None
@@ -111,10 +114,11 @@ def classify_encoder(email: dict) -> Optional[dict]:
     confidence = round(spam_score, 4)
     used_model = f"MiniLM ONNX INT8"
 
-    print(f"       [ENCODER] Verdict: {verdict.upper()}  (confidence: {confidence:.2f})")
+    print(f"       [ENCODER] Verdict: {verdict.upper()}  (confidence: {confidence:.2f}, latency: {latency_ms:.1f}ms)")
 
     return {
         "verdict": verdict,
         "confidence": confidence,
         "used_model": used_model,
+        "latency_ms": latency_ms,
     }
